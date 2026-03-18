@@ -24,7 +24,11 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm build
+      - name: Build web
+        run: pnpm --filter @use-calendar/web build
+
+      - name: Build api
+        run: pnpm --filter @use-calendar/api build
 
       - name: Apply D1 migrations
         working-directory: apps/api
