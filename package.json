@@ -1,0 +1,23 @@
+{
+  "name": "use-calendar",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "db:generate": "pnpm --filter @use-calendar/db generate",
+    "db:migrate:local": "pnpm --filter @use-calendar/api db:migrate:local",
+    "db:migrate:remote": "pnpm --filter @use-calendar/api db:migrate:remote"
+  },
+  "devDependencies": {
+    "turbo": "^2.8.0",
+    "typescript": "^5.8.0"
+  },
+  "packageManager": "pnpm@10.15.1",
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild", "sharp", "workerd"]
+  }
+}

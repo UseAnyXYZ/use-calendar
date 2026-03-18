@@ -1,0 +1,18 @@
+{
+  "name": "use-calendar",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-03-14",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "use-calendar-db",
+      "database_id": "64e3aab8-f188-45f9-ae6a-f7a0f1024208",
+      "migrations_dir": "migrations",
+    },
+  ],
+  "assets": {
+    "directory": "../web/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+  },
+}
