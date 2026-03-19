@@ -153,15 +153,21 @@ app.onError((err, c) => {
 // 404 fallback
 // ---------------------------------------------------------------------------
 
-app.notFound((c) => {
-  return c.json(
-    {
-      code: "NOT_FOUND",
-      message: `Route not found: ${c.req.method} ${c.req.path}`,
-      requestId: c.get("requestId"),
-    },
-    404,
-  );
+app.notFound(async (c) => {
+  // For API routes, return JSON 404
+  if (c.req.path.startsWith("/api/")) {
+    return c.json(
+      {
+        code: "NOT_FOUND",
+        message: `Route not found: ${c.req.method} ${c.req.path}`,
+        requestId: c.get("requestId"),
+      },
+      404,
+    );
+  }
+
+  // For non-API routes (e.g. /cli-auth), serve the SPA
+  return c.env.ASSETS.fetch(new Request(new URL("/index.html", c.req.url)));
 });
 
 export default app;
