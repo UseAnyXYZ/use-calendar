@@ -174,4 +174,15 @@ export const api = {
   rotateFeed() {
     return apiFetch<FeedInfo>("/api/calendar-feed/rotate", { method: "POST" });
   },
+
+  cliAuthCheck(code: string) {
+    return apiFetch<{ status: string }>(`/api/auth/cli/poll?code=${encodeURIComponent(code)}`);
+  },
+
+  cliAuthApprove(code: string) {
+    return apiFetch<{ success: boolean }>("/api/auth/cli/approve", {
+      method: "POST",
+      body: JSON.stringify({ code }),
+    });
+  },
 };

@@ -20,7 +20,7 @@ export class ApiClient {
 
     if (!this.token) {
       throw new Error(
-        "No API token configured. Run `use-calendar auth login --token <PAT>` to authenticate."
+        "No API token configured. Run `use-calendar auth login` to authenticate."
       );
     }
   }

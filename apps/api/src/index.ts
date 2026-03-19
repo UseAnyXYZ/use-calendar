@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { eq } from "drizzle-orm";
 import { createDb, users, calendars } from "@useanysh/calendar-db";
 import { auth } from "./routes/auth.js";
+import { cliAuth } from "./routes/cli-auth.js";
 import { tokens } from "./routes/tokens.js";
 import { eventsRouter } from "./routes/events.js";
 import { feedApi, feedPublic } from "./routes/feed.js";
@@ -31,6 +32,7 @@ app.use("*", async (c, next) => {
 // ---------------------------------------------------------------------------
 
 app.route("/api/auth", auth);
+app.route("/api/auth/cli", cliAuth);
 app.route("/api/tokens", tokens);
 app.route("/api/events", eventsRouter);
 app.route("/api/calendar-feed", feedApi);

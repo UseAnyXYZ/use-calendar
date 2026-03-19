@@ -62,3 +62,14 @@ export interface ApiError {
   details?: unknown;
   requestId: string;
 }
+
+export interface CliAuthStartResponse {
+  code: string;
+  expiresAt: string;
+}
+
+export interface CliAuthPollResponse {
+  status: "pending" | "completed" | "expired";
+  token?: string;
+  tokenName?: string;
+}

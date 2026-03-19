@@ -5,11 +5,19 @@ import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { EventsPage } from "./pages/EventsPage";
 import { SettingsPage } from "./pages/SettingsPage";
+import { CliAuthPage } from "./pages/CliAuthPage";
 
 type AuthPage = "login" | "register";
 type AppPage = "events" | "settings";
 
 export function App() {
+  const [cliAuthCode] = useState(() => {
+    if (window.location.pathname === "/cli-auth") {
+      return new URLSearchParams(window.location.search).get("code") ?? "";
+    }
+    return "";
+  });
+
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [authPage, setAuthPage] = useState<AuthPage>("login");
@@ -33,6 +41,10 @@ export function App() {
     setUser(null);
     setAuthPage("login");
   };
+
+  if (cliAuthCode) {
+    return <CliAuthPage code={cliAuthCode} />;
+  }
 
   if (loading) {
     return (

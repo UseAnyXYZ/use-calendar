@@ -84,6 +84,23 @@ export const calendarFeeds = sqliteTable("calendar_feeds", {
 });
 
 // ---------------------------------------------------------------------------
+// CLI Auth Sessions
+// ---------------------------------------------------------------------------
+export const cliAuthSessions = sqliteTable(
+  "cli_auth_sessions",
+  {
+    id: text("id").primaryKey(),
+    code: text("code").notNull().unique(),
+    status: text("status").notNull().default("pending"),
+    tokenValue: text("token_value"),
+    userId: text("user_id").references(() => users.id),
+    expiresAt: integer("expires_at").notNull(),
+    createdAt: integer("created_at").notNull(),
+  },
+  (table) => [index("cli_auth_sessions_code_idx").on(table.code)],
+);
+
+// ---------------------------------------------------------------------------
 // Events
 // ---------------------------------------------------------------------------
 export const events = sqliteTable(

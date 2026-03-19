@@ -16,7 +16,8 @@ Usage:
   use-calendar <command> [options]
 
 Commands:
-  auth login --token <PAT>       Save API token to config
+  auth login                      Authenticate via browser (opens web UI)
+  auth login --token <PAT>        Save API token manually
   auth whoami [--json]            Show current user info
 
   events list [--from DATE] [--to DATE] [--json]
