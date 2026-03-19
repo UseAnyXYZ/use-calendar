@@ -1,5 +1,11 @@
 # @useanysh/calendar-cli
 
+## 0.2.0
+
+### Minor Changes
+
+- aa49359: Remove `--token` flag from `auth login` command. Authentication now uses browser-based flow only.
+
 ## 0.1.0
 
 ### Minor Changes
