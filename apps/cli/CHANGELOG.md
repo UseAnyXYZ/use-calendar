@@ -1,5 +1,11 @@
 # @useanysh/calendar-cli
 
+## 0.4.1
+
+### Patch Changes
+
+- 870a52c: Rename `calendar-url` command to `url` and add QR code description text
+
 ## 0.4.0
 
 ### Minor Changes
