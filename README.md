@@ -1,6 +1,6 @@
 # <img src="apps/web/src/assets/calendar-icon.svg" width="28" height="28" alt="icon"> Use Calendar
 
-A Claude Code plugin that lets AI agents manage your calendar events through natural language.
+A calendar CLI and API for AI agents. Works with any agent framework — includes a Claude Code plugin out of the box.
 
 Web app: [calendar.useany.sh](https://calendar.useany.sh)
 
