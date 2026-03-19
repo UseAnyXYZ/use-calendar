@@ -16,14 +16,14 @@
     "@useanysh/calendar-contracts": "workspace:*",
     "@useanysh/calendar-db": "workspace:*",
     "@useanysh/calendar-ics": "workspace:*",
-    "drizzle-orm": "^0.40.0",
+    "drizzle-orm": "^0.40.1",
     "hono": "^4.7.0",
-    "zod": "^3.24.0"
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250313.0",
     "typescript": "^5.8.0",
-    "vitest": "^3.1.0",
+    "vitest": "^4.1.0",
     "wrangler": "^4.0.0"
   }
 }

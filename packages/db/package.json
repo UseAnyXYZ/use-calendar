@@ -18,11 +18,11 @@
     "generate": "drizzle-kit generate"
   },
   "dependencies": {
-    "drizzle-orm": "^0.40.0"
+    "drizzle-orm": "^0.40.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250313.0",
-    "drizzle-kit": "^0.30.0",
+    "drizzle-kit": "^0.30.6",
     "typescript": "^5.8.0"
   }
 }
