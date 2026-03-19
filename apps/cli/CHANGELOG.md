@@ -1,5 +1,11 @@
 # @useanysh/calendar-cli
 
+## 0.0.3
+
+### Patch Changes
+
+- 14eb1ac: Read CLI version from package.json at runtime instead of hardcoding
+
 ## 0.0.2
 
 ### Patch Changes
