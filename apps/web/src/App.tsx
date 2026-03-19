@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CalendarIcon } from "./CalendarIcon";
 import { api, type User } from "./api";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
@@ -58,7 +59,7 @@ export function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1 className="app-title">Use Calendar</h1>
+        <h1 className="app-title"><CalendarIcon /> Use Calendar</h1>
         <nav className="app-nav">
           <button
             className={`nav-btn ${appPage === "events" ? "active" : ""}`}

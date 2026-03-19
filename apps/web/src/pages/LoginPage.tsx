@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { CalendarIcon } from "../CalendarIcon";
 import { api, ApiError, type User } from "../api";
 
 interface Props {
@@ -29,7 +30,7 @@ export function LoginPage({ onLogin, onSwitchToRegister }: Props) {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <h1 className="auth-title">Use Calendar</h1>
+        <h1 className="auth-title"><CalendarIcon /> Use Calendar</h1>
         <h2>Sign in</h2>
         <form onSubmit={handleSubmit} className="auth-form">
           {error && <div className="form-error">{error}</div>}

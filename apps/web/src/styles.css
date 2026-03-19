@@ -65,6 +65,9 @@ html {
 }
 
 .app-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 1.15rem;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -254,6 +257,9 @@ html {
 }
 
 .auth-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: 1.4rem;
   font-weight: 600;
   letter-spacing: -0.03em;
