@@ -6,6 +6,7 @@ import { cliAuth } from "./routes/cli-auth.js";
 import { tokens } from "./routes/tokens.js";
 import { eventsRouter } from "./routes/events.js";
 import { feedApi, feedPublic } from "./routes/feed.js";
+import { skillMarkdown } from "./generated/skill-markdown.js";
 import { requireAuth } from "./middleware/auth.js";
 import type { AppEnv } from "./types.js";
 
@@ -30,6 +31,12 @@ app.use("*", async (c, next) => {
 // ---------------------------------------------------------------------------
 // Routes
 // ---------------------------------------------------------------------------
+
+app.get("/SKILL.md", (c) =>
+  c.body(skillMarkdown, 200, {
+    "Content-Type": "text/markdown; charset=utf-8",
+  }),
+);
 
 app.route("/api/auth", auth);
 app.route("/api/auth/cli", cliAuth);

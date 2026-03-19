@@ -7,6 +7,7 @@ export default defineConfig({
     proxy: {
       "/api": "http://localhost:8787",
       "/calendar": "http://localhost:8787",
+      "/SKILL.md": "http://localhost:8787",
     },
   },
 });

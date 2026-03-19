@@ -22,6 +22,8 @@ This stores a personal access token locally for future CLI and plugin use.
 
 This project includes a [Claude Code plugin](https://docs.anthropic.com/en/docs/claude-code/skills) that lets Claude manage your calendar directly from a conversation.
 
+The public skill markdown is also available at [`https://calendar.useany.sh/SKILL.md`](https://calendar.useany.sh/SKILL.md). It mirrors [`.claude/skills/use-calendar/SKILL.md`](./.claude/skills/use-calendar/SKILL.md) in this repo.
+
 Add the plugin to your Claude Code settings (`~/.claude/settings.json`):
 
 ```json

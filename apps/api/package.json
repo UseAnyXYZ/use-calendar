@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev",
-    "build": "wrangler deploy --dry-run --outdir=dist",
+    "sync:skill-md": "node ./scripts/sync-skill-md.mjs",
+    "dev": "pnpm run sync:skill-md && wrangler dev",
+    "build": "pnpm run sync:skill-md && wrangler deploy --dry-run --outdir=dist",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
     "test": "vitest run",
