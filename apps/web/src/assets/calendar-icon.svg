@@ -1,6 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect x="4" y="10" width="56" height="50" rx="4" fill="#1a1a1a"/>
-  <rect x="16" y="4" width="6" height="12" rx="2" fill="#1a1a1a"/>
-  <rect x="42" y="4" width="6" height="12" rx="2" fill="#1a1a1a"/>
-  <path fill="#fff" d="M12 30h8v6h-8zm12 0h8v6h-8zm12 0h8v6h-8zm12 0h8v6h-8zM12 40h8v6h-8zm12 0h8v6h-8zm12 0h8v6h-8zm12 0h8v6h-8zM12 50h8v6h-8zm12 0h8v6h-8zm12 0h8v6h-8z"/>
+<svg width="64" height="64" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Calendar outline -->
+  <rect x="20" y="28" width="88" height="80" rx="12" stroke="#000" stroke-width="6"/>
+  <line x1="20" y1="48" x2="108" y2="48" stroke="#000" stroke-width="6"/>
+
+  <!-- Rings -->
+  <line x1="40" y1="16" x2="40" y2="32" stroke="#000" stroke-width="6" stroke-linecap="round"/>
+  <line x1="88" y1="16" x2="88" y2="32" stroke="#000" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Bash prompt -->
+  <path d="M40 68 L56 78 L40 88" stroke="#000" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="60" y1="86" x2="82" y2="86" stroke="#000" stroke-width="6" stroke-linecap="round"/>
 </svg>
