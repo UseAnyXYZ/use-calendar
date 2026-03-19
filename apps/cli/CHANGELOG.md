@@ -1,5 +1,11 @@
 # @useanysh/calendar-cli
 
+## 0.4.0
+
+### Minor Changes
+
+- d9f1d84: Rename `calendar feed-url` to top-level `calendar-url` command with QR code support, URL caching, and `--rotate` flag
+
 ## 0.3.0
 
 ### Minor Changes
