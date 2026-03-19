@@ -16,10 +16,12 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@useanysh/calendar-contracts": "workspace:*"
+    "@useanysh/calendar-contracts": "workspace:*",
+    "qrcode-terminal": "^0.12.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
+    "@types/qrcode-terminal": "^0.12.0",
     "typescript": "^5.8.0",
     "vitest": "^3.1.0"
   }

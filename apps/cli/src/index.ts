@@ -3,7 +3,7 @@
 import { createRequire } from "node:module";
 import { login, whoami } from "./commands/auth.js";
 import { list, create, update, del } from "./commands/events.js";
-import { feedUrl } from "./commands/calendar.js";
+import { calendarUrl } from "./commands/calendar.js";
 import { printError } from "./output.js";
 
 const require = createRequire(import.meta.url);
@@ -29,7 +29,7 @@ Commands:
                                   Update an existing event
   events delete <id> [--json]     Cancel an event
 
-  calendar feed-url [--json]      Show calendar feed URL
+  calendar-url [--rotate] [--json] Show calendar feed URL (with QR code)
 
 Options:
   --help                          Show this help message
@@ -90,16 +90,8 @@ async function main(): Promise<void> {
       }
       break;
 
-    case "calendar":
-      switch (subcommand) {
-        case "feed-url":
-          await feedUrl(rest);
-          break;
-        default:
-          printError(`Unknown calendar command: ${subcommand ?? "(none)"}`);
-          console.log('Available: calendar feed-url');
-          process.exit(1);
-      }
+    case "calendar-url":
+      await calendarUrl(args.slice(1));
       break;
 
     default:

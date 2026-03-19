@@ -5,6 +5,7 @@ import * as os from "node:os";
 export interface Config {
   apiToken?: string;
   apiBaseUrl?: string;
+  feedUrl?: string;
 }
 
 export function getConfigDir(): string {
@@ -55,4 +56,14 @@ export function saveConfig(config: Config): void {
 
   const configPath = getConfigPath();
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2) + "\n", "utf-8");
+}
+
+export function getFeedUrl(): string | undefined {
+  return loadConfig().feedUrl;
+}
+
+export function saveFeedUrl(url: string): void {
+  const config = loadConfig();
+  config.feedUrl = url;
+  saveConfig(config);
 }
