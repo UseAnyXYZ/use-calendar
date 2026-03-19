@@ -77,10 +77,6 @@ export interface Token {
   lastUsedAt?: string;
 }
 
-export interface TokenCreateResponse extends Token {
-  token: string;
-}
-
 export interface CalendarInfo {
   id: string;
   name: string;
@@ -143,13 +139,6 @@ export const api = {
 
   listTokens() {
     return apiFetch<Token[]>("/api/tokens");
-  },
-
-  createToken(name: string) {
-    return apiFetch<TokenCreateResponse>("/api/tokens", {
-      method: "POST",
-      body: JSON.stringify({ name }),
-    });
   },
 
   deleteToken(id: string) {

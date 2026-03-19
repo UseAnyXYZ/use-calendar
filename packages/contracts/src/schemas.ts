@@ -74,10 +74,6 @@ export const loginSchema = z.object({
   password: z.string(),
 });
 
-export const createTokenSchema = z.object({
-  name: z.string().min(1).max(100),
-});
-
 export const cliAuthApproveSchema = z.object({
   code: z.string().min(1).max(100),
 });

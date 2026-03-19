@@ -1,8 +1,6 @@
 import { Hono } from "hono";
 import { eq, and } from "drizzle-orm";
-import { apiTokens, generateId } from "@useanysh/calendar-db";
-import { createTokenSchema } from "@useanysh/calendar-contracts";
-import { generateToken, hashToken } from "../lib/crypto.js";
+import { apiTokens } from "@useanysh/calendar-db";
 import { requireAuth } from "../middleware/auth.js";
 import type { AppEnv } from "../types.js";
 
@@ -32,51 +30,6 @@ tokens.get("/", async (c) => {
       createdAt: new Date(t.createdAt).toISOString(),
       lastUsedAt: t.lastUsedAt ? new Date(t.lastUsedAt).toISOString() : null,
     })),
-  );
-});
-
-// Create a new API token
-tokens.post("/", async (c) => {
-  const body = await c.req.json();
-  const parsed = createTokenSchema.safeParse(body);
-  if (!parsed.success) {
-    return c.json(
-      {
-        code: "VALIDATION_ERROR",
-        message: "Invalid input",
-        details: parsed.error.flatten(),
-        requestId: c.get("requestId"),
-      },
-      400,
-    );
-  }
-
-  const userId = c.get("userId")!;
-  const db = c.get("db");
-  const { name } = parsed.data;
-
-  const rawToken = generateToken();
-  const tokenHash = await hashToken(rawToken);
-  const now = Date.now();
-  const id = generateId();
-
-  await db.insert(apiTokens).values({
-    id,
-    userId,
-    name,
-    tokenHash,
-    createdAt: now,
-  });
-
-  return c.json(
-    {
-      id,
-      name,
-      token: rawToken,
-      createdAt: new Date(now).toISOString(),
-      lastUsedAt: null,
-    },
-    201,
   );
 });
 

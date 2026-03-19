@@ -8,8 +8,6 @@ interface Props {
 
 export function SettingsPage({ user, onLogout }: Props) {
   const [tokens, setTokens] = useState<Token[]>([]);
-  const [tokenName, setTokenName] = useState("");
-  const [newTokenPlaintext, setNewTokenPlaintext] = useState("");
   const [tokenError, setTokenError] = useState("");
   const [tokenLoading, setTokenLoading] = useState(true);
 
@@ -24,7 +22,6 @@ export function SettingsPage({ user, onLogout }: Props) {
   const [feedError, setFeedError] = useState("");
   const [feedLoading, setFeedLoading] = useState(true);
   const [copied, setCopied] = useState(false);
-  const [tokenCopied, setTokenCopied] = useState(false);
 
   const fetchTokens = async () => {
     setTokenLoading(true);
@@ -88,22 +85,6 @@ export function SettingsPage({ user, onLogout }: Props) {
       );
     } finally {
       setCalendarNameSaving(false);
-    }
-  };
-
-  const handleCreateToken = async () => {
-    if (!tokenName.trim()) return;
-    setTokenError("");
-    setNewTokenPlaintext("");
-    try {
-      const res = await api.createToken(tokenName.trim());
-      setNewTokenPlaintext(res.token);
-      setTokenName("");
-      await fetchTokens();
-    } catch (err) {
-      setTokenError(
-        err instanceof ApiError ? err.message : "Failed to create token",
-      );
     }
   };
 
@@ -207,59 +188,12 @@ export function SettingsPage({ user, onLogout }: Props) {
       <section className="settings-section">
         <h2>Personal Access Tokens</h2>
         <p className="settings-description">
-          Create tokens for API access from scripts and integrations.
+          Tokens are created via the CLI:{" "}
+          <code>use-calendar auth login</code>. You can view and revoke
+          existing tokens here.
         </p>
 
         {tokenError && <div className="form-error">{tokenError}</div>}
-
-        {newTokenPlaintext && (
-          <div className="token-reveal">
-            <p>
-              <strong>Your new token</strong> (copy it now, it won't be shown
-              again):
-            </p>
-            <div className="token-reveal-row">
-              <code className="token-code">{newTokenPlaintext}</code>
-              <button
-                className="btn btn-ghost btn-sm"
-                onClick={async () => {
-                  try {
-                    await navigator.clipboard.writeText(newTokenPlaintext);
-                  } catch {
-                    const el = document.createElement("input");
-                    el.value = newTokenPlaintext;
-                    document.body.appendChild(el);
-                    el.select();
-                    document.execCommand("copy");
-                    document.body.removeChild(el);
-                  }
-                  setTokenCopied(true);
-                  setTimeout(() => setTokenCopied(false), 2000);
-                }}
-              >
-                {tokenCopied ? "Copied!" : "Copy"}
-              </button>
-            </div>
-          </div>
-        )}
-
-        <div className="token-create-row">
-          <input
-            type="text"
-            className="form-input"
-            placeholder="Token name (e.g. my-script)"
-            value={tokenName}
-            onChange={(e) => setTokenName(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleCreateToken()}
-          />
-          <button
-            className="btn btn-primary"
-            onClick={handleCreateToken}
-            disabled={!tokenName.trim()}
-          >
-            Create
-          </button>
-        </div>
 
         {tokenLoading ? (
           <p className="muted">Loading tokens...</p>
