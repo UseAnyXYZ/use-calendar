@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { eq } from "drizzle-orm";
-import { createDb, users, calendars } from "@use-calendar/db";
+import { createDb, users, calendars } from "@useanysh/calendar-db";
 import { auth } from "./routes/auth.js";
 import { tokens } from "./routes/tokens.js";
 import { eventsRouter } from "./routes/events.js";

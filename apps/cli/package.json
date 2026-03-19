@@ -1,11 +1,12 @@
 {
-  "name": "@use-calendar/cli",
+  "name": "@useanysh/calendar-cli",
   "version": "0.0.1",
-  "private": true,
   "type": "module",
+  "description": "CLI for use-calendar",
   "bin": {
     "use-calendar": "./dist/index.js"
   },
+  "files": ["dist"],
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
@@ -13,7 +14,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@use-calendar/contracts": "workspace:*"
+    "@useanysh/calendar-contracts": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

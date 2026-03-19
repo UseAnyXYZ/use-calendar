@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { eq, and, gte, lte, ne, or } from "drizzle-orm";
-import { events, calendars, generateId } from "@use-calendar/db";
-import { createEventSchema, updateEventSchema } from "@use-calendar/contracts";
+import { events, calendars, generateId } from "@useanysh/calendar-db";
+import { createEventSchema, updateEventSchema } from "@useanysh/calendar-contracts";
 import { requireAuth } from "../middleware/auth.js";
 import type { AppEnv, AppDb } from "../types.js";
 

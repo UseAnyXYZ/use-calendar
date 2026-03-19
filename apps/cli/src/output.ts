@@ -1,4 +1,4 @@
-import type { CalendarEvent } from "@use-calendar/contracts";
+import type { CalendarEvent } from "@useanysh/calendar-contracts";
 
 const BOLD = "\x1b[1m";
 const DIM = "\x1b[2m";

@@ -1,4 +1,4 @@
-import type { CreateEventInput, UpdateEventInput } from "@use-calendar/contracts";
+import type { CreateEventInput, UpdateEventInput } from "@useanysh/calendar-contracts";
 import { ApiClient } from "../client.js";
 import { formatEvent, formatDate, printTable, printJson, printError, printSuccess } from "../output.js";
 

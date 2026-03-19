@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { setCookie, deleteCookie } from "hono/cookie";
 import { eq } from "drizzle-orm";
-import { users, sessions, calendars, generateId } from "@use-calendar/db";
-import { registerSchema, loginSchema } from "@use-calendar/contracts";
+import { users, sessions, calendars, generateId } from "@useanysh/calendar-db";
+import { registerSchema, loginSchema } from "@useanysh/calendar-contracts";
 import { hashPassword, generateSalt } from "../lib/crypto.js";
 import { requireAuth } from "../middleware/auth.js";
 import type { AppEnv } from "../types.js";

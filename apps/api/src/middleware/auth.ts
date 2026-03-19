@@ -1,7 +1,7 @@
 import { createMiddleware } from "hono/factory";
 import { getCookie } from "hono/cookie";
 import { eq, and } from "drizzle-orm";
-import { sessions, apiTokens } from "@use-calendar/db";
+import { sessions, apiTokens } from "@useanysh/calendar-db";
 import { hashToken } from "../lib/crypto.js";
 import type { AppEnv } from "../types.js";
 

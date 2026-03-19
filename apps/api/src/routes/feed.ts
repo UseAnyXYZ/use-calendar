@@ -5,9 +5,9 @@ import {
   calendarFeeds,
   events,
   generateId,
-} from "@use-calendar/db";
-import { serializeCalendar } from "@use-calendar/ics";
-import type { IcsEvent } from "@use-calendar/ics";
+} from "@useanysh/calendar-db";
+import { serializeCalendar } from "@useanysh/calendar-ics";
+import type { IcsEvent } from "@useanysh/calendar-ics";
 import { generateFeedToken, hashToken } from "../lib/crypto.js";
 import { requireAuth } from "../middleware/auth.js";
 import type { AppEnv } from "../types.js";

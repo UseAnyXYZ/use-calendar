@@ -5,8 +5,8 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
-    "@use-calendar/api#build": {
-      "dependsOn": ["^build", "@use-calendar/web#build"],
+    "@useanysh/calendar-api#build": {
+      "dependsOn": ["^build", "@useanysh/calendar-web#build"],
       "outputs": ["dist/**"]
     },
     "dev": {

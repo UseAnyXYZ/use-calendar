@@ -8,16 +8,24 @@
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",
     "test": "turbo test",
-    "db:generate": "pnpm --filter @use-calendar/db generate",
-    "db:migrate:local": "pnpm --filter @use-calendar/api db:migrate:local",
-    "db:migrate:remote": "pnpm --filter @use-calendar/api db:migrate:remote"
+    "db:generate": "pnpm --filter @useanysh/calendar-db generate",
+    "db:migrate:local": "pnpm --filter @useanysh/calendar-api db:migrate:local",
+    "db:migrate:remote": "pnpm --filter @useanysh/calendar-api db:migrate:remote",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo build && changeset publish"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.30.0",
     "turbo": "^2.8.0",
     "typescript": "^5.8.0"
   },
   "packageManager": "pnpm@10.15.1",
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "sharp", "workerd"]
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "workerd"
+    ]
   }
 }

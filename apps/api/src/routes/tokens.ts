@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { eq, and } from "drizzle-orm";
-import { apiTokens, generateId } from "@use-calendar/db";
-import { createTokenSchema } from "@use-calendar/contracts";
+import { apiTokens, generateId } from "@useanysh/calendar-db";
+import { createTokenSchema } from "@useanysh/calendar-contracts";
 import { generateToken, hashToken } from "../lib/crypto.js";
 import { requireAuth } from "../middleware/auth.js";
 import type { AppEnv } from "../types.js";

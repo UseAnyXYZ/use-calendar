@@ -1,5 +1,5 @@
 {
-  "name": "@use-calendar/api",
+  "name": "@useanysh/calendar-api",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -13,9 +13,9 @@
     "db:migrate:remote": "wrangler d1 migrations apply use-calendar-db --remote"
   },
   "dependencies": {
-    "@use-calendar/contracts": "workspace:*",
-    "@use-calendar/db": "workspace:*",
-    "@use-calendar/ics": "workspace:*",
+    "@useanysh/calendar-contracts": "workspace:*",
+    "@useanysh/calendar-db": "workspace:*",
+    "@useanysh/calendar-ics": "workspace:*",
     "drizzle-orm": "^0.40.0",
     "hono": "^4.7.0",
     "zod": "^3.24.0"

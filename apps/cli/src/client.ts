@@ -6,7 +6,7 @@ import type {
   ApiTokenSummary,
   CalendarFeedInfo,
   ApiError,
-} from "@use-calendar/contracts";
+} from "@useanysh/calendar-contracts";
 import { loadConfig } from "./config.js";
 
 const DEFAULT_BASE_URL = "http://localhost:8787";
