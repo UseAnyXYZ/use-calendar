@@ -32,7 +32,9 @@ export async function calendarUrl(args: string[]): Promise<void> {
         printJson({ url: cached });
       } else {
         console.log(`Calendar URL: ${cached}`);
+        console.log("\nScan this QR code to subscribe on your phone:\n");
         printQr(cached);
+        console.log("Or copy the URL above into your calendar app.");
       }
       return;
     }
@@ -60,7 +62,9 @@ export async function calendarUrl(args: string[]): Promise<void> {
     } else {
       printSuccess("Calendar URL generated!");
       console.log(`Calendar URL: ${info.url}`);
+      console.log("\nScan this QR code to subscribe on your phone:\n");
       printQr(info.url);
+      console.log("Or copy the URL above into your calendar app.");
     }
   } catch (err) {
     printError(err instanceof Error ? err.message : String(err));

@@ -29,7 +29,7 @@ Commands:
                                   Update an existing event
   events delete <id> [--json]     Cancel an event
 
-  calendar-url [--rotate] [--json] Show calendar feed URL (with QR code)
+  url [--rotate] [--json]          Show calendar feed URL (with QR code)
 
 Options:
   --help                          Show this help message
@@ -90,7 +90,7 @@ async function main(): Promise<void> {
       }
       break;
 
-    case "calendar-url":
+    case "url":
       await calendarUrl(args.slice(1));
       break;
 
