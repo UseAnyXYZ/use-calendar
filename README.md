@@ -1,68 +1,44 @@
-# <img src="apps/web/src/assets/calendar-icon.svg" width="28" height="28" alt="icon" style="vertical-align: middle;"> Use Calendar
+# <img src="apps/web/src/assets/calendar-icon.svg" width="28" height="28" alt="icon"> Use Calendar
 
-A calendar management system with a web app, CLI, and REST API.
+A Claude Code plugin that lets AI agents manage your calendar events through natural language.
 
-## Monorepo Structure
+Web app: [calendar.useany.sh](https://calendar.useany.sh)
 
-```
-apps/
-  web/          → React web application (Vite)
-  api/          → Backend API (Cloudflare Workers + Hono)
-  cli/          → Command-line interface
-packages/
-  contracts/    → Shared types & Zod validation schemas
-  db/           → Database schema & Drizzle ORM
-  ics/          → iCalendar (RFC 5545) serialization
-```
-
-## Tech Stack
-
-- **Runtime:** TypeScript, Cloudflare Workers, Node.js
-- **Frontend:** React 19, Vite 6
-- **Backend:** Hono, Cloudflare D1 (SQLite), Drizzle ORM
-- **Validation:** Zod
-- **Tooling:** Turborepo, pnpm, Vitest, Wrangler
-
-## Getting Started
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) (v18+)
-- [pnpm](https://pnpm.io/) (v10.15+)
-
-### Install
+## Install CLI
 
 ```bash
-pnpm install
+npm i -g @useanysh/calendar-cli
 ```
 
-### Development
+## Auth Setup
 
 ```bash
-# Start all dev servers
-pnpm dev
-
-# Or run individually
-pnpm --filter @use-calendar/api dev    # API on localhost:8787
-pnpm --filter @use-calendar/web dev    # Web app (proxies API to :8787)
+use-calendar auth login
 ```
 
-### Database
+This stores a personal access token locally for future CLI and plugin use.
 
-```bash
-pnpm db:generate           # Generate migrations from schema changes
-pnpm db:migrate:local      # Apply migrations locally
-pnpm db:migrate:remote     # Apply migrations to remote D1
+## Claude Code Plugin
+
+This project includes a [Claude Code plugin](https://docs.anthropic.com/en/docs/claude-code/skills) that lets Claude manage your calendar directly from a conversation.
+
+Add the plugin to your Claude Code settings (`~/.claude/settings.json`):
+
+```json
+{
+  "plugins": ["/path/to/use-calendar/.claude-plugin"]
+}
 ```
 
-### Build & Test
+Once installed, you can ask Claude to manage your calendar using natural language:
 
-```bash
-pnpm build        # Build all packages
-pnpm typecheck    # Type check all packages
-pnpm lint         # Lint all packages
-pnpm test         # Run tests
-```
+- **List events** — "What's on my calendar this week?"
+- **Create events** — "Add a meeting with Alice tomorrow at 2pm"
+- **Update events** — "Move my 3pm meeting to 4pm"
+- **Delete events** — "Cancel my dentist appointment"
+- **Check feed URL** — "Get my calendar feed URL"
+
+Claude will use the `/use-calendar` skill, which runs the CLI under the hood via `npx use-calendar`.
 
 ## Features
 
