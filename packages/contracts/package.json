@@ -1,9 +1,11 @@
 {
   "name": "@useanysh/calendar-contracts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "Shared contracts for use-calendar",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
