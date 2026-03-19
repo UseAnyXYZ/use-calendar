@@ -70,19 +70,7 @@ async function loginWithBrowser(): Promise<void> {
   process.exit(1);
 }
 
-export async function login(args: string[]): Promise<void> {
-  const tokenIndex = args.indexOf("--token");
-  if (tokenIndex !== -1 && tokenIndex + 1 < args.length) {
-    // Manual token flow
-    const token = args[tokenIndex + 1];
-    const config = loadConfig();
-    config.apiToken = token;
-    saveConfig(config);
-    printSuccess(`Token saved to ${getConfigPath()}`);
-    return;
-  }
-
-  // Browser-based auth flow
+export async function login(): Promise<void> {
   await loginWithBrowser();
 }
 

@@ -17,7 +17,6 @@ Usage:
 
 Commands:
   auth login                      Authenticate via browser (opens web UI)
-  auth login --token <PAT>        Save API token manually
   auth whoami [--json]            Show current user info
 
   events list [--from DATE] [--to DATE] [--json]
@@ -58,7 +57,7 @@ async function main(): Promise<void> {
     case "auth":
       switch (subcommand) {
         case "login":
-          await login(rest);
+          await login();
           break;
         case "whoami":
           await whoami(rest);
