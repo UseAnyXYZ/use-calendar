@@ -10,6 +10,12 @@
       "migrations_dir": "migrations",
     },
   ],
+  "observability": {
+    "logs": {
+      "enabled": false,
+      "invocation_logs": true,
+    },
+  },
   "assets": {
     "directory": "../web/dist",
     "binding": "ASSETS",
