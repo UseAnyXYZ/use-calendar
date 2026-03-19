@@ -2,5 +2,5 @@
   "name": "@useanysh/use-calendar",
   "version": "1.0.0",
   "description": "Manage calendar events from Claude Code — list, create, update, delete events and more.",
-  "skills": "./skills/"
+  "skills": "../.claude/skills/"
 }
