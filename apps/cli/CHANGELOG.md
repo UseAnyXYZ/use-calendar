@@ -1,5 +1,16 @@
 # @useanysh/calendar-cli
 
+## 0.1.0
+
+### Minor Changes
+
+- a1b1444: Add browser-based CLI authentication: `use-calendar auth login` opens the web UI for login/register and automatically provisions a PAT
+
+### Patch Changes
+
+- Updated dependencies [a1b1444]
+  - @useanysh/calendar-contracts@0.0.2
+
 ## 0.0.3
 
 ### Patch Changes
