@@ -28,15 +28,22 @@ export function getConfigPath(): string {
   return path.join(getConfigDir(), "config.json");
 }
 
+const DEFAULT_BASE_URL = "https://calendar.useany.sh";
+
 export function loadConfig(): Config {
   const configPath = getConfigPath();
 
+  let config: Config;
   try {
     const content = fs.readFileSync(configPath, "utf-8");
-    return JSON.parse(content) as Config;
+    config = JSON.parse(content) as Config;
   } catch {
-    return {};
+    config = {};
   }
+
+  config.apiBaseUrl ??= process.env.API_BASE_URL ?? DEFAULT_BASE_URL;
+
+  return config;
 }
 
 export function saveConfig(config: Config): void {

@@ -9,8 +9,6 @@ import type {
 } from "@useanysh/calendar-contracts";
 import { loadConfig } from "./config.js";
 
-const DEFAULT_BASE_URL = "http://localhost:8787";
-
 export class ApiClient {
   private token: string;
   private baseUrl: string;
@@ -18,7 +16,7 @@ export class ApiClient {
   constructor(token?: string, baseUrl?: string) {
     const config = loadConfig();
     this.token = token ?? config.apiToken ?? "";
-    this.baseUrl = baseUrl ?? config.apiBaseUrl ?? DEFAULT_BASE_URL;
+    this.baseUrl = baseUrl ?? config.apiBaseUrl ?? "";
 
     if (!this.token) {
       throw new Error(
