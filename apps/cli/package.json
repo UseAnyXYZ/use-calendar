@@ -1,12 +1,14 @@
 {
   "name": "@useanysh/calendar-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "CLI for use-calendar",
   "bin": {
     "use-calendar": "./dist/index.js"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
