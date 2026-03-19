@@ -1,5 +1,11 @@
 # @useanysh/calendar-cli
 
+## 0.3.0
+
+### Minor Changes
+
+- 5ca123f: Auto-name PATs with device hostname, falling back to a random city name
+
 ## 0.2.0
 
 ### Minor Changes
