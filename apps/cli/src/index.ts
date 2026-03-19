@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 
+import { createRequire } from "node:module";
 import { login, whoami } from "./commands/auth.js";
 import { list, create, update, del } from "./commands/events.js";
 import { feedUrl } from "./commands/calendar.js";
 import { printError } from "./output.js";
 
-const VERSION = "0.0.1";
+const require = createRequire(import.meta.url);
+const { version: VERSION } = require("../package.json") as { version: string };
 
 const HELP = `\
 use-calendar - CLI for use-calendar
