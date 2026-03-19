@@ -1,0 +1,36 @@
+const cityNames = [
+  "Tokyo",
+  "Paris",
+  "London",
+  "Sydney",
+  "Cairo",
+  "Mumbai",
+  "Berlin",
+  "Toronto",
+  "Seoul",
+  "Lima",
+  "Nairobi",
+  "Istanbul",
+  "Bangkok",
+  "Lisbon",
+  "Oslo",
+  "Dublin",
+  "Prague",
+  "Vienna",
+  "Havana",
+  "Bogota",
+  "Zurich",
+  "Kyoto",
+  "Taipei",
+  "Athens",
+  "Helsinki",
+  "Reykjavik",
+  "Marrakech",
+  "Santiago",
+  "Hanoi",
+  "Porto",
+];
+
+export function getRandomCityName(): string {
+  return cityNames[Math.floor(Math.random() * cityNames.length)];
+}

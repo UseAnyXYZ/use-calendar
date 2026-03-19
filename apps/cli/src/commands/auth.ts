@@ -1,4 +1,5 @@
 import { exec } from "node:child_process";
+import { hostname } from "node:os";
 import { loadConfig, saveConfig, getConfigPath } from "../config.js";
 import { ApiClient } from "../client.js";
 import { printJson, printError, printSuccess } from "../output.js";
@@ -19,7 +20,11 @@ async function loginWithBrowser(): Promise<void> {
   // Start CLI auth session
   let code: string;
   try {
-    const res = await fetch(`${baseUrl}/api/auth/cli/start`, { method: "POST" });
+    const res = await fetch(`${baseUrl}/api/auth/cli/start`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ deviceName: hostname() }),
+    });
     if (!res.ok) {
       throw new Error(`HTTP ${res.status}`);
     }

@@ -93,6 +93,7 @@ export const cliAuthSessions = sqliteTable(
     code: text("code").notNull().unique(),
     status: text("status").notNull().default("pending"),
     tokenValue: text("token_value"),
+    deviceName: text("device_name"),
     userId: text("user_id").references(() => users.id),
     expiresAt: integer("expires_at").notNull(),
     createdAt: integer("created_at").notNull(),

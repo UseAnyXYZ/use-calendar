@@ -1,0 +1,1 @@
+ALTER TABLE cli_auth_sessions ADD device_name TEXT;

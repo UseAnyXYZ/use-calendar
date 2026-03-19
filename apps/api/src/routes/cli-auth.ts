@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { apiTokens, cliAuthSessions, generateId } from "@useanysh/calendar-db";
 import { cliAuthApproveSchema } from "@useanysh/calendar-contracts";
 import { generateToken, hashToken } from "../lib/crypto.js";
+import { getRandomCityName } from "../lib/city-names.js";
 import { requireAuth } from "../middleware/auth.js";
 import type { AppEnv } from "../types.js";
 
@@ -24,6 +25,16 @@ cliAuth.post("/start", async (c) => {
   const now = Date.now();
   const expiresAt = now + 10 * 60 * 1000; // 10 minutes
 
+  let deviceName: string | undefined;
+  try {
+    const body = await c.req.json();
+    if (typeof body.deviceName === "string" && body.deviceName.trim()) {
+      deviceName = body.deviceName.trim();
+    }
+  } catch {
+    // No body or invalid JSON — that's fine
+  }
+
   const id = generateId();
   const code = generateCode();
 
@@ -31,6 +42,7 @@ cliAuth.post("/start", async (c) => {
     id,
     code,
     status: "pending",
+    deviceName: deviceName ?? null,
     expiresAt,
     createdAt: now,
   });
@@ -127,7 +139,7 @@ cliAuth.post("/approve", requireAuth, async (c) => {
   const rawToken = generateToken();
   const tokenHash = await hashToken(rawToken);
   const tokenId = generateId();
-  const tokenName = "CLI Login";
+  const tokenName = session.deviceName || getRandomCityName();
 
   await db.insert(apiTokens).values({
     id: tokenId,
