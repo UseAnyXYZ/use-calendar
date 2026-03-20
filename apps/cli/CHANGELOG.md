@@ -1,5 +1,11 @@
 # @useanysh/calendar-cli
 
+## 0.5.0
+
+### Minor Changes
+
+- 6064cd8: Add reminder support with `--reminder <minutes>` flag for `events create` and `events update` commands. Multiple reminders can be specified by repeating the flag. Reminders are displayed in event output (e.g. "1h 30m before").
+
 ## 0.4.1
 
 ### Patch Changes
