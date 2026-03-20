@@ -1,6 +1,6 @@
 {
   "name": "@useanysh/calendar-contracts",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "type": "module",
   "description": "Shared contracts for use-calendar",
   "files": [
