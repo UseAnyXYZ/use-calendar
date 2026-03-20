@@ -14,6 +14,7 @@ export interface IcsEvent {
   timezone?: string;
   startDate?: string;
   endDateExclusive?: string;
+  rrule?: string;
   status: "confirmed" | "cancelled";
   alarms?: IcsAlarm[];
   createdAt: number;
@@ -213,6 +214,10 @@ function serializeEvent(event: IcsEvent): string {
       addLine(`DTSTART:${formatUtcDateTime(event.startTime!)}`);
       addLine(`DTEND:${formatUtcDateTime(event.endTime!)}`);
     }
+  }
+
+  if (event.rrule) {
+    addLine(`RRULE:${event.rrule}`);
   }
 
   if (event.alarms && event.alarms.length > 0) {

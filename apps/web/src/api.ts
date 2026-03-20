@@ -57,8 +57,12 @@ export interface CalendarEvent {
   startDate: string | null;
   endDateExclusive: string | null;
   isAllDay: boolean;
+  rrule: string | null;
   status: string;
   reminders: Reminder[];
+  isRecurring?: boolean;
+  occurrenceStart?: string;
+  occurrenceEnd?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -73,6 +77,7 @@ export interface EventInput {
   startDate?: string;
   endDateExclusive?: string;
   timezone?: string;
+  rrule?: string;
   reminders?: Reminder[];
 }
 

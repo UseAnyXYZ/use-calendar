@@ -54,6 +54,9 @@ export function formatEvent(event: CalendarEvent, isJson: boolean): string {
   if (event.description) {
     lines.push(`  ${CYAN}Description${RESET}: ${event.description}`);
   }
+  if (event.rrule) {
+    lines.push(`  ${CYAN}Recurrence${RESET}: ${event.rrule}`);
+  }
   if (event.reminders && event.reminders.length > 0) {
     const formatted = event.reminders.map((r) => formatReminderMinutes(r.minutes)).join(", ");
     lines.push(`  ${CYAN}Reminders${RESET}: ${formatted}`);

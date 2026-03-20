@@ -172,6 +172,7 @@ feedPublic.get("/:feedToken{.+\\.ics$}", async (c) => {
     description: e.description ?? undefined,
     location: e.location ?? undefined,
     isAllDay: e.isAllDay === 1,
+    rrule: e.rrule ?? undefined,
     startTime: e.startTime ?? undefined,
     endTime: e.endTime ?? undefined,
     timezone: e.timezone ?? undefined,

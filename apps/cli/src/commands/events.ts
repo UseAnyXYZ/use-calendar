@@ -97,6 +97,9 @@ export async function create(args: string[]): Promise<void> {
   if (location) input.location = location;
   if (timezone) input.timezone = timezone;
 
+  const rrule = parseFlag(args, "--rrule");
+  if (rrule) input.rrule = rrule;
+
   const reminderValues = parseFlagAll(args, "--reminder");
   if (reminderValues.length > 0) {
     input.reminders = reminderValues.map((v) => ({ minutes: parseInt(v, 10) }));
@@ -138,7 +141,8 @@ export async function update(args: string[]): Promise<void> {
     && args[args.indexOf(a) - 1] !== "--start-date"
     && args[args.indexOf(a) - 1] !== "--end-date"
     && args[args.indexOf(a) - 1] !== "--timezone"
-    && args[args.indexOf(a) - 1] !== "--reminder");
+    && args[args.indexOf(a) - 1] !== "--reminder"
+    && args[args.indexOf(a) - 1] !== "--rrule");
 
   if (!id) {
     printError("Usage: use-calendar events update <id> [options]");
@@ -165,6 +169,8 @@ export async function update(args: string[]): Promise<void> {
   if (endTime) input.endTime = toFullISO(endTime);
   if (startDate) input.startDate = startDate;
   if (endDate) input.endDateExclusive = endDate;
+  const updateRrule = parseFlag(args, "--rrule");
+  if (updateRrule) input.rrule = updateRrule;
 
   const updateReminderValues = parseFlagAll(args, "--reminder");
   if (updateReminderValues.length > 0) {

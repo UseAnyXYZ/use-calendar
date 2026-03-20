@@ -23,6 +23,7 @@ export interface CalendarEvent {
   startDate: string | null;
   endDateExclusive: string | null;
   isAllDay: boolean;
+  rrule: string | null;
   status: EventStatus;
   reminders: Reminder[];
   createdAt: string;
@@ -45,6 +46,7 @@ export interface CreateEventInput {
   startDate?: string;
   endDateExclusive?: string;
   isAllDay: boolean;
+  rrule?: string;
   reminders?: Reminder[];
 }
 

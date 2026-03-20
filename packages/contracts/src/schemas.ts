@@ -7,6 +7,32 @@ export const reminderSchema = z.object({
   minutes: z.number().int().min(0).max(40320), // max 4 weeks
 });
 
+const ALLOWED_RRULE_KEYS = new Set([
+  "FREQ", "INTERVAL", "COUNT", "UNTIL", "BYDAY", "BYMONTHDAY", "BYMONTH", "WKST",
+]);
+
+export const rruleSchema = z
+  .string()
+  .refine((s) => s.startsWith("FREQ="), { message: "RRULE must start with FREQ=" })
+  .refine(
+    (s) => {
+      const parts = s.split(";");
+      return parts.every((p) => {
+        const key = p.split("=")[0];
+        return ALLOWED_RRULE_KEYS.has(key!);
+      });
+    },
+    { message: "RRULE contains unsupported keys" },
+  )
+  .refine(
+    (s) => {
+      const hasCount = s.includes("COUNT=");
+      const hasUntil = s.includes("UNTIL=");
+      return !(hasCount && hasUntil);
+    },
+    { message: "RRULE cannot have both COUNT and UNTIL" },
+  );
+
 export const createEventSchema = z
   .object({
     title: z.string().min(1).max(500),
@@ -14,6 +40,7 @@ export const createEventSchema = z
     location: z.string().max(500).optional(),
     timezone: z.string().optional(),
     isAllDay: z.boolean(),
+    rrule: rruleSchema.optional(),
     reminders: z.array(reminderSchema).max(5).optional(),
     startTime: z
       .string()
@@ -51,6 +78,7 @@ export const updateEventSchema = z.object({
   location: z.string().max(500).optional(),
   timezone: z.string().optional(),
   isAllDay: z.boolean().optional(),
+  rrule: rruleSchema.nullable().optional(),
   reminders: z.array(reminderSchema).max(5).optional(),
   startTime: z
     .string()

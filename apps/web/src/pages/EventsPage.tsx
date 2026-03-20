@@ -51,6 +51,7 @@ function formatReminder(minutes: number): string {
 }
 
 function eventStart(ev: CalendarEvent): Date {
+  if (ev.occurrenceStart) return new Date(ev.isAllDay ? ev.occurrenceStart + "T00:00:00" : ev.occurrenceStart);
   if (ev.isAllDay && ev.startDate) return new Date(ev.startDate + "T00:00:00");
   if (ev.startTime) return new Date(ev.startTime);
   return new Date();
@@ -178,24 +179,26 @@ export function EventsPage() {
           {groups.map((group) => (
             <div key={group.date} className="event-group">
               <h3 className="event-group-label">{group.label}</h3>
-              {group.events.map((ev) => (
+              {group.events.map((ev) => {
+                const cardKey = ev.occurrenceStart ? `${ev.id}-${ev.occurrenceStart}` : ev.id;
+                return (
                 <div
-                  key={ev.id}
-                  className={`event-card ${expandedId === ev.id ? "expanded" : ""}`}
+                  key={cardKey}
+                  className={`event-card ${expandedId === cardKey ? "expanded" : ""}`}
                 >
                   <div
                     className="event-card-header"
                     onClick={() =>
-                      setExpandedId(expandedId === ev.id ? null : ev.id)
+                      setExpandedId(expandedId === cardKey ? null : cardKey)
                     }
                   >
                     <div className="event-card-main">
-                      <span className="event-title">{ev.title}</span>
+                      <span className="event-title">{ev.title}{ev.rrule ? " ↻" : ""}</span>
                       <span className="event-time">
                         {ev.isAllDay
                           ? "All day"
-                          : ev.startTime && ev.endTime
-                            ? `${formatDate(ev.startTime, false)} - ${formatDate(ev.endTime, false)}`
+                          : (ev.occurrenceStart || ev.startTime) && (ev.occurrenceEnd || ev.endTime)
+                            ? `${formatDate(ev.occurrenceStart || ev.startTime!, false)} - ${formatDate(ev.occurrenceEnd || ev.endTime!, false)}`
                             : ""}
                       </span>
                     </div>
@@ -227,7 +230,8 @@ export function EventsPage() {
                     </div>
                   )}
                 </div>
-              ))}
+                );
+              })}
             </div>
           ))}
         </div>

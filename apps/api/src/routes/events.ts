@@ -1,7 +1,7 @@
 import { Hono } from "hono";
-import { eq, and, gte, lte, ne, or } from "drizzle-orm";
+import { eq, and, gte, lte, ne, or, isNotNull } from "drizzle-orm";
 import { events, calendars, generateId } from "@useanysh/calendar-db";
-import { createEventSchema, updateEventSchema } from "@useanysh/calendar-contracts";
+import { createEventSchema, updateEventSchema, expandRRule } from "@useanysh/calendar-contracts";
 import { requireAuth } from "../middleware/auth.js";
 import type { AppEnv, AppDb } from "../types.js";
 
@@ -35,6 +35,7 @@ function formatEvent(row: typeof events.$inferSelect) {
     startDate: row.startDate,
     endDateExclusive: row.endDateExclusive,
     isAllDay: row.isAllDay === 1,
+    rrule: row.rrule ?? null,
     status: row.status as "confirmed" | "cancelled",
     reminders: row.reminders ? JSON.parse(row.reminders) : [],
     createdAt: new Date(row.createdAt).toISOString(),
@@ -88,14 +89,84 @@ eventsRouter.get("/", async (c) => {
     gte(events.endDateExclusive, fromDateStr),
   );
 
-  conditions.push(or(timedOverlap, allDayOverlap)!);
+  // Recurring events: fetch events with rrule that START before range end
+  const recurringTimed = and(isNotNull(events.rrule), lte(events.startTime, toMs));
+  const recurringAllDay = and(isNotNull(events.rrule), lte(events.startDate, toDateStr));
+
+  conditions.push(or(timedOverlap, allDayOverlap, recurringTimed, recurringAllDay)!);
 
   const rows = await db
     .select()
     .from(events)
     .where(and(...conditions));
 
-  return c.json(rows.map(formatEvent));
+  // Expand recurring events into virtual occurrences
+  type FormattedEvent = ReturnType<typeof formatEvent> & {
+    isRecurring?: boolean;
+    occurrenceStart?: string;
+    occurrenceEnd?: string;
+  };
+  const result: FormattedEvent[] = [];
+
+  for (const row of rows) {
+    if (!row.rrule) {
+      result.push(formatEvent(row));
+      continue;
+    }
+
+    const formatted = formatEvent(row);
+    const isAllDay = row.isAllDay === 1;
+
+    if (isAllDay && row.startDate && row.endDateExclusive) {
+      const durationDays =
+        (new Date(row.endDateExclusive).getTime() - new Date(row.startDate).getTime()) /
+        86400_000;
+
+      const occurrences = expandRRule(
+        row.startDate,
+        row.rrule,
+        fromDateStr,
+        toDateStr,
+        undefined,
+        true,
+      ) as string[];
+
+      for (const occStart of occurrences) {
+        const occEndDate = new Date(occStart);
+        occEndDate.setDate(occEndDate.getDate() + durationDays);
+        const occEnd = occEndDate.toISOString().slice(0, 10);
+
+        result.push({
+          ...formatted,
+          isRecurring: true,
+          occurrenceStart: occStart,
+          occurrenceEnd: occEnd,
+        });
+      }
+    } else if (row.startTime && row.endTime) {
+      const durationMs = row.endTime - row.startTime;
+
+      const occurrences = expandRRule(
+        row.startTime,
+        row.rrule,
+        fromMs,
+        toMs,
+        row.timezone ?? undefined,
+        false,
+      ) as number[];
+
+      for (const occStart of occurrences) {
+        result.push({
+          ...formatted,
+          isRecurring: true,
+          occurrenceStart: new Date(occStart).toISOString(),
+          occurrenceEnd: new Date(occStart + durationMs).toISOString(),
+        });
+      }
+    }
+  }
+
+  return c.json(result);
 });
 
 // Create a new event
@@ -145,6 +216,7 @@ eventsRouter.post("/", async (c) => {
     startDate: data.startDate ?? null,
     endDateExclusive: data.endDateExclusive ?? null,
     isAllDay: data.isAllDay ? 1 : 0,
+    rrule: data.rrule ?? null,
     reminders: data.reminders ? JSON.stringify(data.reminders) : null,
     status: "confirmed" as const,
     createdAt: now,
@@ -260,6 +332,7 @@ eventsRouter.patch("/:id", async (c) => {
   if (data.startDate !== undefined) updates.startDate = data.startDate;
   if (data.endDateExclusive !== undefined)
     updates.endDateExclusive = data.endDateExclusive;
+  if (data.rrule !== undefined) updates.rrule = data.rrule;
   if (data.reminders !== undefined)
     updates.reminders = data.reminders ? JSON.stringify(data.reminders) : null;
 
