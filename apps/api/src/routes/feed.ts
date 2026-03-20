@@ -178,6 +178,11 @@ feedPublic.get("/:feedToken{.+\\.ics$}", async (c) => {
     startDate: e.startDate ?? undefined,
     endDateExclusive: e.endDateExclusive ?? undefined,
     status: e.status as "confirmed" | "cancelled",
+    alarms: e.reminders
+      ? (JSON.parse(e.reminders) as { minutes: number }[]).map((r) => ({
+          minutes: r.minutes,
+        }))
+      : undefined,
     createdAt: e.createdAt,
     updatedAt: e.updatedAt,
   }));

@@ -8,6 +8,16 @@ function parseFlag(args: string[], flag: string): string | undefined {
   return args[index + 1];
 }
 
+function parseFlagAll(args: string[], flag: string): string[] {
+  const values: string[] = [];
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === flag && i + 1 < args.length) {
+      values.push(args[i + 1]!);
+    }
+  }
+  return values;
+}
+
 function hasFlag(args: string[], flag: string): boolean {
   return args.includes(flag);
 }
@@ -87,6 +97,11 @@ export async function create(args: string[]): Promise<void> {
   if (location) input.location = location;
   if (timezone) input.timezone = timezone;
 
+  const reminderValues = parseFlagAll(args, "--reminder");
+  if (reminderValues.length > 0) {
+    input.reminders = reminderValues.map((v) => ({ minutes: parseInt(v, 10) }));
+  }
+
   if (isAllDay) {
     if (startDate) input.startDate = startDate;
     if (endDate) input.endDateExclusive = endDate;
@@ -122,7 +137,8 @@ export async function update(args: string[]): Promise<void> {
     && args[args.indexOf(a) - 1] !== "--end"
     && args[args.indexOf(a) - 1] !== "--start-date"
     && args[args.indexOf(a) - 1] !== "--end-date"
-    && args[args.indexOf(a) - 1] !== "--timezone");
+    && args[args.indexOf(a) - 1] !== "--timezone"
+    && args[args.indexOf(a) - 1] !== "--reminder");
 
   if (!id) {
     printError("Usage: use-calendar events update <id> [options]");
@@ -149,6 +165,11 @@ export async function update(args: string[]): Promise<void> {
   if (endTime) input.endTime = toFullISO(endTime);
   if (startDate) input.startDate = startDate;
   if (endDate) input.endDateExclusive = endDate;
+
+  const updateReminderValues = parseFlagAll(args, "--reminder");
+  if (updateReminderValues.length > 0) {
+    input.reminders = updateReminderValues.map((v) => ({ minutes: parseInt(v, 10) }));
+  }
 
   try {
     const client = new ApiClient();

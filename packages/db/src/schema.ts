@@ -120,6 +120,7 @@ export const events = sqliteTable(
     startDate: text("start_date"),
     endDateExclusive: text("end_date_exclusive"),
     isAllDay: integer("is_all_day").notNull().default(0),
+    reminders: text("reminders"),
     status: text("status").notNull().default("confirmed"),
     createdAt: integer("created_at").notNull(),
     updatedAt: integer("updated_at").notNull(),

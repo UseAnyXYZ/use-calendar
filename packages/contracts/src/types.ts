@@ -24,11 +24,16 @@ export interface CalendarEvent {
   endDateExclusive: string | null;
   isAllDay: boolean;
   status: EventStatus;
+  reminders: Reminder[];
   createdAt: string;
   updatedAt: string;
 }
 
 export type EventSummary = CalendarEvent;
+
+export interface Reminder {
+  minutes: number;
+}
 
 export interface CreateEventInput {
   title: string;
@@ -40,6 +45,7 @@ export interface CreateEventInput {
   startDate?: string;
   endDateExclusive?: string;
   isAllDay: boolean;
+  reminders?: Reminder[];
 }
 
 export type UpdateEventInput = Partial<CreateEventInput>;

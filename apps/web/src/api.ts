@@ -41,6 +41,10 @@ export interface User {
   email: string;
 }
 
+export interface Reminder {
+  minutes: number;
+}
+
 export interface CalendarEvent {
   id: string;
   calendarId: string;
@@ -54,6 +58,7 @@ export interface CalendarEvent {
   endDateExclusive: string | null;
   isAllDay: boolean;
   status: string;
+  reminders: Reminder[];
   createdAt: string;
   updatedAt: string;
 }
@@ -68,6 +73,7 @@ export interface EventInput {
   startDate?: string;
   endDateExclusive?: string;
   timezone?: string;
+  reminders?: Reminder[];
 }
 
 export interface Token {

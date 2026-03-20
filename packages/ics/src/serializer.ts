@@ -1,3 +1,8 @@
+export interface IcsAlarm {
+  /** Minutes before the event start to trigger the alarm. */
+  minutes: number;
+}
+
 export interface IcsEvent {
   uid: string;
   summary: string;
@@ -10,6 +15,7 @@ export interface IcsEvent {
   startDate?: string;
   endDateExclusive?: string;
   status: "confirmed" | "cancelled";
+  alarms?: IcsAlarm[];
   createdAt: number;
   updatedAt: number;
 }
@@ -141,6 +147,28 @@ function foldLine(line: string): string {
   return chunks.join(CRLF + " ") + CRLF;
 }
 
+/**
+ * Format a duration in minutes as an RFC 5545 DURATION value.
+ * Uses -PT{m}M for triggers before the event start.
+ * 0 minutes means trigger at event start.
+ */
+function formatDuration(minutes: number): string {
+  if (minutes === 0) return "PT0S";
+
+  const days = Math.floor(minutes / 1440);
+  const hours = Math.floor((minutes % 1440) / 60);
+  const mins = minutes % 60;
+
+  let dur = "-P";
+  if (days > 0) dur += `${days}D`;
+  if (hours > 0 || mins > 0) {
+    dur += "T";
+    if (hours > 0) dur += `${hours}H`;
+    if (mins > 0) dur += `${mins}M`;
+  }
+  return dur;
+}
+
 function formatDateValue(dateStr: string): string {
   // dateStr is YYYY-MM-DD, output YYYYMMDD
   return dateStr.replace(/-/g, "");
@@ -184,6 +212,16 @@ function serializeEvent(event: IcsEvent): string {
     } else {
       addLine(`DTSTART:${formatUtcDateTime(event.startTime!)}`);
       addLine(`DTEND:${formatUtcDateTime(event.endTime!)}`);
+    }
+  }
+
+  if (event.alarms && event.alarms.length > 0) {
+    for (const alarm of event.alarms) {
+      addLine("BEGIN:VALARM");
+      addLine("ACTION:DISPLAY");
+      addLine(`DESCRIPTION:${escapeText(event.summary)}`);
+      addLine(`TRIGGER:${formatDuration(alarm.minutes)}`);
+      addLine("END:VALARM");
     }
   }
 

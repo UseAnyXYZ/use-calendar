@@ -38,6 +38,18 @@ function formatDate(iso: string, allDay: boolean): string {
   });
 }
 
+function formatReminder(minutes: number): string {
+  if (minutes === 0) return "At start";
+  const days = Math.floor(minutes / 1440);
+  const hours = Math.floor((minutes % 1440) / 60);
+  const mins = minutes % 60;
+  const parts: string[] = [];
+  if (days > 0) parts.push(`${days}d`);
+  if (hours > 0) parts.push(`${hours}h`);
+  if (mins > 0) parts.push(`${mins}m`);
+  return `${parts.join(" ")} before`;
+}
+
 function eventStart(ev: CalendarEvent): Date {
   if (ev.isAllDay && ev.startDate) return new Date(ev.startDate + "T00:00:00");
   if (ev.startTime) return new Date(ev.startTime);
@@ -195,6 +207,11 @@ export function EventsPage() {
                     <div className="event-card-details">
                       {ev.description && (
                         <p className="event-description">{ev.description}</p>
+                      )}
+                      {ev.reminders && ev.reminders.length > 0 && (
+                        <p className="event-reminders">
+                          Reminders: {ev.reminders.map((r) => formatReminder(r.minutes)).join(", ")}
+                        </p>
                       )}
                       <p className="event-meta">
                         Timezone: {ev.timezone} &middot; Status: {ev.status}

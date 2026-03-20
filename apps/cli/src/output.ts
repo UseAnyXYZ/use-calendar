@@ -14,6 +14,18 @@ export function formatDate(isoOrEpoch: string | number | null | undefined): stri
   return date.toLocaleString();
 }
 
+function formatReminderMinutes(minutes: number): string {
+  if (minutes === 0) return "at start";
+  const days = Math.floor(minutes / 1440);
+  const hours = Math.floor((minutes % 1440) / 60);
+  const mins = minutes % 60;
+  const parts: string[] = [];
+  if (days > 0) parts.push(`${days}d`);
+  if (hours > 0) parts.push(`${hours}h`);
+  if (mins > 0) parts.push(`${mins}m`);
+  return `${parts.join(" ")} before`;
+}
+
 export function formatEvent(event: CalendarEvent, isJson: boolean): string {
   if (isJson) {
     return JSON.stringify(event, null, 2);
@@ -41,6 +53,10 @@ export function formatEvent(event: CalendarEvent, isJson: boolean): string {
   }
   if (event.description) {
     lines.push(`  ${CYAN}Description${RESET}: ${event.description}`);
+  }
+  if (event.reminders && event.reminders.length > 0) {
+    const formatted = event.reminders.map((r) => formatReminderMinutes(r.minutes)).join(", ");
+    lines.push(`  ${CYAN}Reminders${RESET}: ${formatted}`);
   }
 
   return lines.join("\n");

@@ -3,6 +3,10 @@ import { z } from "zod";
 const isoDateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$/;
 const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
+export const reminderSchema = z.object({
+  minutes: z.number().int().min(0).max(40320), // max 4 weeks
+});
+
 export const createEventSchema = z
   .object({
     title: z.string().min(1).max(500),
@@ -10,6 +14,7 @@ export const createEventSchema = z
     location: z.string().max(500).optional(),
     timezone: z.string().optional(),
     isAllDay: z.boolean(),
+    reminders: z.array(reminderSchema).max(5).optional(),
     startTime: z
       .string()
       .regex(isoDateTimeRegex, "Must be an ISO 8601 date-time string")
@@ -46,6 +51,7 @@ export const updateEventSchema = z.object({
   location: z.string().max(500).optional(),
   timezone: z.string().optional(),
   isAllDay: z.boolean().optional(),
+  reminders: z.array(reminderSchema).max(5).optional(),
   startTime: z
     .string()
     .regex(isoDateTimeRegex, "Must be an ISO 8601 date-time string")

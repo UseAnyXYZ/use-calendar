@@ -36,6 +36,7 @@ function formatEvent(row: typeof events.$inferSelect) {
     endDateExclusive: row.endDateExclusive,
     isAllDay: row.isAllDay === 1,
     status: row.status as "confirmed" | "cancelled",
+    reminders: row.reminders ? JSON.parse(row.reminders) : [],
     createdAt: new Date(row.createdAt).toISOString(),
     updatedAt: new Date(row.updatedAt).toISOString(),
   };
@@ -144,6 +145,7 @@ eventsRouter.post("/", async (c) => {
     startDate: data.startDate ?? null,
     endDateExclusive: data.endDateExclusive ?? null,
     isAllDay: data.isAllDay ? 1 : 0,
+    reminders: data.reminders ? JSON.stringify(data.reminders) : null,
     status: "confirmed" as const,
     createdAt: now,
     updatedAt: now,
@@ -258,6 +260,8 @@ eventsRouter.patch("/:id", async (c) => {
   if (data.startDate !== undefined) updates.startDate = data.startDate;
   if (data.endDateExclusive !== undefined)
     updates.endDateExclusive = data.endDateExclusive;
+  if (data.reminders !== undefined)
+    updates.reminders = data.reminders ? JSON.stringify(data.reminders) : null;
 
   await db
     .update(events)
